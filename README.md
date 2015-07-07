@@ -50,8 +50,9 @@ These plays from the US Digital Services Playbook, aligned with our experienced 
 Our code is deployed in a Docker container hosted  at https://registry.hub.docker.com/u/clurect/lv-gsa-app/.  
 To use it after pulling just run “docker run -d -p 8080:8080 -p 27017:27017 clurect/lv-gsa-app”.  To see the application running go to <DOCKER_ADDR>:8080/med-checker in your browser
 
-##Original source code repos available at Front-end - 
-https://github.com/keithb418/lv-gsa/; Back-end - https://github.com/jhillhouse92/lv-gsa-resources - Please view the gsa-resource-release-1.0 branch.
+##Original source code repos available at - 
+Front-end - https://github.com/keithb418/lv-gsa/
+Back-end - https://github.com/jhillhouse92/lv-gsa-resources - Please view the gsa-resource-release-1.0 branch.
 
 ##API Reference - 
 openFDA is a research project to provide open APIs, raw data downloads, documentation and examples, and a developer community for an important collection of FDA public datasets. (https://github.com/FDA/openfda)  
