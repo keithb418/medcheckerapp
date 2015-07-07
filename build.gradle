@@ -1,0 +1,47 @@
+configurations.all {
+    exclude module: 'slf4j-log4j12'
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    repositories {
+        maven { url "https://repo.spring.io/libs-release" }
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+	testCompile ('junit:junit:4.10')
+	testCompile "org.mockito:mockito-core:1.9.0"
+	testCompile "org.springframework:spring-test:3.2.0.RELEASE"
+	testCompile('org.springframework:spring-test-mvc:1.0.0.BUILD-SNAPSHOT') {
+		exclude module: 'org.hamcrest:hamcrest-core'
+    	}
+    }    
+}
+
+buildscript {
+    repositories {
+        maven { url "https://repo.spring.io/libs-release" }
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+	classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE")
+    }
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+}
+
+apply plugin: 'spring-boot'
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.11'
+}
+
+task showMeCache << {
+  configurations.compile.each { println it }
+}
+

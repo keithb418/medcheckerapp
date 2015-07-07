@@ -1,0 +1,13 @@
+<button>
+	<span class="brand-name"><%- brandName %></span>
+	<% if (match.length) { %>
+		<span class="match">
+			<span class="match-title">Match:</span>
+			<span class="match-criteria"><% _.each(match, function (criteria) { %><%- criteria %><br /><% }); %></span>
+		</span>
+	<% } %>
+	<span class="match">
+		<span class="match-title">Manufacturer:</span>
+		<span class="match-criteria"><%- manufacturerName %></span>
+	</span>
+</button>
