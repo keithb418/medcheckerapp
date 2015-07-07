@@ -1,0 +1,75 @@
+import groovy.xml.*
+buildscript {
+    repositories {
+        maven { url "https://repo.spring.io/libs-release" }
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+	classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE")
+    }
+}
+
+ant.importBuild '../ant-builds/tomcat/targets.xml'
+
+jar {
+	baseName = 'MedCheckerResources'
+	version = '1.0'
+	manifest {
+        	attributes 'Main-Class': 'com.longview.gsa.config.ApplicationConfig'
+    	}
+}
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	maven { url "https://repo.spring.io/libs-release" }
+    maven { url "https://m2.neo4j.org" }
+    maven { url 'http://repo.spring.io/snapshot' }
+}
+
+configurations{
+    providedRuntimeTomcat
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    providedRuntimeTomcat('org.springframework.boot:spring-boot-starter-tomcat')
+    compile("org.springframework.data:spring-data-mongodb:1.7.0.BUILD-SNAPSHOT")
+    compile("org.springframework.data:spring-data-rest-webmvc")
+    compile('com.fasterxml.jackson.core:jackson-databind:2.5.0')
+    compile('com.google.code.gson:gson:2.3.1')
+    compile('commons-io:commons-io:2.4')
+    compile('net.sf.extjwnl:extjwnl:1.8.1'){
+	exclude module: 'slf4j-log4j12-1.7.12'
+        exclude module: 'logback-classic-1.1.2'
+	exclude module: 'slf4j-log4j12'
+    }
+    compile('net.sf.extjwnl:extjwnl-data-wn31:1.2'){
+        exclude module: 'slf4j-log4j12'
+	exclude module: 'slf4j-log4j12-1.7.12'
+   	exclude module: 'logback-classic-1.1.2'
+    }
+}
+
+apply plugin: 'spring-boot'
+apply plugin: 'war'
+
+war {
+    baseName = 'MedCheckerResources'
+    version = '1.0'
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.11'
+}
+
+task showMeCache << {
+  configurations.compile.each { println it }
+}
+
+task myJavadocs(type: Javadoc) {
+  classpath = configurations.compile
+  source = sourceSets.main.allJava
+}
+ant.properties['deployment.war.file.path']=war.archivePath
